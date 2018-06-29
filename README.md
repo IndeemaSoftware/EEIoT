@@ -4,7 +4,7 @@
 QML IoT components, for fast and super user friendly IoT projects
 
 # Example
-You can check sample code that uses EEIoT lib - https://github.com/IndeemaSoftware/EEIoT_Sample/blob/master/README.md
+You can check sample code that uses EEIoT lib - https://github.com/IndeemaSoftware/EEIoT_Sample
 
 # Easy start
 To start using EEIoT just run
