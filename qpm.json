@@ -17,6 +17,6 @@
   "dependencies": [
   ],
   "license": "LGPL_3_0",
-  "pri_filename": "EEIoT.pri",
+  "pri_filename": "com_indeema_eeiot.pri",
   "webpage": "www.indeema.com"
 }
