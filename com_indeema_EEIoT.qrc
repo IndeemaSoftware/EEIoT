@@ -1,6 +1,8 @@
-
 <RCC>
     <qresource prefix="/com/indeema/eeiot">
         <file>qmldir</file>
+        <file>EEIoT/WaterProgress.qml</file>
+        <file>EEIoT/Linear.qml</file>
+        <file>EEIoT/Knob.qml</file>
     </qresource>
 </RCC>
