@@ -1,0 +1,22 @@
+{
+  "name": "com.indeema.EEIoT",
+  "description": "",
+  "author": {
+    "name": "Indeema Software Inc.",
+    "email": "ask@indeema.com"
+  },
+  "repository": {
+    "type": "GITHUB",
+    "url": "git@github.com:IndeemaSoftware/EEIoT.git"
+  },
+  "version": {
+    "label": "0.0.1",
+    "revision": "",
+    "fingerprint": ""
+  },
+  "dependencies": [
+  ],
+  "license": "LGPL_3_0",
+  "pri_filename": "EEIoT.pri",
+  "webpage": ""
+}
