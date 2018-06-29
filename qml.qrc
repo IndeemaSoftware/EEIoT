@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>EEIoT/Knob.qml</file>
+        <file>EEIoT/WaterProgress.qml</file>
+        <file>EEIoT/Linear.qml</file>
+    </qresource>
+</RCC>
