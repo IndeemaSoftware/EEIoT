@@ -1,6 +1,6 @@
 {
-  "name": "com.indeema.EEIoT",
-  "description": "",
+  "name": "com.indeema.eeiot",
+  "description": "QML IoT components, for fast and super user friendly IoT projects",
   "author": {
     "name": "Indeema Software Inc.",
     "email": "ask@indeema.com"
@@ -18,5 +18,5 @@
   ],
   "license": "LGPL_3_0",
   "pri_filename": "EEIoT.pri",
-  "webpage": ""
+  "webpage": "www.indeema.com"
 }

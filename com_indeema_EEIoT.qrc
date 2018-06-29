@@ -1,6 +1,6 @@
 
 <RCC>
-    <qresource prefix="/com/indeema/EEIoT">
+    <qresource prefix="/com/indeema/eeiot">
         <file>qmldir</file>
     </qresource>
 </RCC>

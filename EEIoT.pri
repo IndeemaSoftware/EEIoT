@@ -1,3 +1,3 @@
 
 RESOURCES += \
-    $$PWD/com_indeema_EEIoT.qrc
+    $$PWD/com_indeema_eeiot.qrc
