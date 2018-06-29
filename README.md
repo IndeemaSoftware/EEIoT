@@ -27,7 +27,7 @@ In this section, we only consider bugs and ignore any questions relating to the 
 
 - For further questions on cooperation, simply email us at **support@indeema.com**.
 
-- If want to see any components in lib just contact us with design **support@indeema.com**.
+- If you need components just contact us with design **support@indeema.com** , we will add these components to lib.
 
 ## License
 **EEIoT** works under the MIT license. For more information see [here](https://github.com/IndeemaSoftware/EEIoT/blob/master/LICENSE).
