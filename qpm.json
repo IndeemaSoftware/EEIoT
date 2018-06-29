@@ -10,8 +10,8 @@
     "url": "git@github.com:IndeemaSoftware/EEIoT.git"
   },
   "version": {
-    "label": "0.0.1",
-    "revision": "",
+    "label": "0.0.2",
+    "revision": "1",
     "fingerprint": ""
   },
   "dependencies": [
