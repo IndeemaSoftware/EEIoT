@@ -3,6 +3,7 @@ import QtCharts 2.0
 
 Item {
     id: waterProgress
+    antialiasing: true
 
     property double from:0
     property double value: 1
@@ -52,44 +53,73 @@ Item {
 
         var distance = rightX - leftX
         var w = distance/Math.PI/5
-        var waveMaxHeight = 0.04*(2*radius)//9% from circle diameter
+        var waveMaxHeight = 0.08*(2*radius)//9% from circle diameter
         var a = (1.0 - Math.abs((centreX - heightT)) / radius) * waveMaxHeight
-        var x1 = centreX - Math.sqrt(Math.pow(radius - border, 2) - Math.pow(radius - border - value, 2))
-        var x2 = centreX + Math.sqrt(Math.pow(radius - border, 2) - Math.pow(radius - border - value, 2))
+        var x1 = centreX - Math.sqrt(Math.pow(radius, 2) - Math.pow(radius - heightT, 2))
+        var x2 = centreX + Math.sqrt(Math.pow(radius, 2) - Math.pow(radius - heightT, 2))
 
         ctx.beginPath()
         ctx.fillStyle = waterProgress.color;
         ctx.strokeStyle = waterProgress.color;
-        ctx.moveTo(x1, (centreY + radius - border) - heightT);
-        ctx.moveTo(centreX, (centreY + radius - border));
 
-        var iter = 0;
-        while(iter<=heightT) {
-           var y22 =  (centreY + radius - border) - iter
-           var x22 = centreX  - Math.sqrt(Math.pow(radius - border, 2) - Math.pow(radius - border - iter, 2))
-           ctx.lineTo(x22, y22);
-           iter+=0.1
-        }
-
-        var stepW = 0.02*radius
-        var start = 0
-        var finish = 0
-        for(var i = x1; i <= x2; i+=stepW)
+        var iter = 0
+        var y11 = 0
+        var y = 0
+        var x11 = 0;
+        var stepW = 0.0002*(radius)
+        var totalY = (centreY + radius) - heightT
+        var amp = 0
+        var dist = 0
+        var startX = 0
+        var startY = 0
+        var finishX = 0
+        var finishY = 0
+        var isFirst = true
+        for (var i=x1;i<=x2;i+=stepW)
         {
-            var y = getWave(i,w,a) + (centreY + radius - border) - heightT
-            var dist = Math.sqrt(Math.pow(centreX - i, 2) + Math.pow(centreY - i, 2))
-            if (dist < radius) {
+            amp = 1.0 - Math.abs(Math.abs(centreX - i) - radius) *a
+            y = getWave(i,1/distance*w,a) + (centreY + radius) - heightT
+            dist = Math.sqrt(Math.pow(centreX - i, 2) + Math.pow(centreY - y, 2))
+
+            if (dist <= radius) {
+                if (isFirst) {
+                    ctx.moveTo(i, y);
+                    startX = i;
+                    startY = y
+                }
+
                 ctx.lineTo(i,y);
+
+                finishX = i
+                finishY = y
+
+                isFirst = false
             }
         }
         iter = heightT
 
-        while(iter>=0) {
-            var y11 = (centreY + radius - border) - iter
-            var x11 = centreX + Math.sqrt(Math.pow(radius - border, 2) - Math.pow(radius - border - iter, 2))
-            ctx.lineTo(x11 , y11);
-            iter-=0.1
+        while(iter >= 0) {
+            y11 = (centreY + radius) - iter
+            x11 = centreX + Math.sqrt(Math.pow(radius, 2) - Math.pow(radius - iter, 2))
+            if (y11 > finishY) {
+                ctx.lineTo(x11, y11);
+            }
+            iter -= 0.1
         }
+
+        while(iter <= heightT) {
+            y11 =  (centreY + radius) - iter
+            x11 = centreX  - Math.sqrt(Math.pow(radius, 2) - Math.pow(radius - iter, 2))
+
+            if (y11 > startY) {
+                ctx.lineTo(x11, y11);
+            }
+
+            iter+=0.1
+        }
+
+        ctx.lineTo(startX, startY);
+
         ctx.fill()
         ctx.stroke()
     }
@@ -122,18 +152,27 @@ Item {
             var centreX = width / 2.0;
             var centreY = height / 2.0;
 
-            var heightT = (radius - border)*2*coef
+            var innerRadius = radius - border - waterProgress.lineWidth
+            var heightT = innerRadius*2.0*coef
    
             ctx.lineWidth = 1;
             ctx.strokeStyle = Qt.rgba(0, 0, 0, 1)
 
-            drawWave(ctx,centreY, centreX,radius, border,heightT)
-
+            if (value == waterProgress.to) {
+                ctx.beginPath();
+                ctx.fillStyle = waterProgress.color
+                ctx.strokeStyle = waterProgress.color;
+                ctx.arc(centreX, centreY, innerRadius, 0, 2*Math.PI, false);
+                ctx.fill();
+                ctx.stroke();
+            } else if (value > waterProgress.from) {
+                drawWave(ctx, centreY, centreX, innerRadius, border, heightT)
+            }
 
             ctx.beginPath();
             ctx.strokeStyle = waterProgress.color;
             ctx.lineWidth = waterProgress.lineWidth;
-            ctx.arc(radius, radius, radius - waterProgress.lineWidth, 0, 2*Math.PI, false);
+            ctx.arc(radius, radius, radius - waterProgress.lineWidth/2, 0, 2*Math.PI, false);
             ctx.stroke();
         }
     }
