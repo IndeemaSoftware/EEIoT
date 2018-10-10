@@ -45,21 +45,22 @@ Item {
        return a* Math.sin(w*x)
     }
 
-    function drawWawe(ctx, centreX, centreY, radius, border,heightT)
+    function drawWave(ctx, centreX, centreY, radius, border, heightT)
     {
         var leftX = 0
-        var rightX = 100
+        var rightX = 2 * radius
 
         var distance = rightX - leftX
         var w = distance/Math.PI/5
-        var a = 3.5
+        var waveMaxHeight = 0.04*(2*radius)//9% from circle diameter
+        var a = (1.0 - Math.abs((centreX - heightT)) / radius) * waveMaxHeight
         var x1 = centreX - Math.sqrt(Math.pow(radius - border, 2) - Math.pow(radius - border - value, 2))
         var x2 = centreX + Math.sqrt(Math.pow(radius - border, 2) - Math.pow(radius - border - value, 2))
 
         ctx.beginPath()
         ctx.fillStyle = waterProgress.color;
         ctx.strokeStyle = waterProgress.color;
-        ctx.moveTo(x1, (centreY + radius - border) - value);
+        ctx.moveTo(x1, (centreY + radius - border) - heightT);
         ctx.moveTo(centreX, (centreY + radius - border));
 
         var iter = 0;
@@ -70,10 +71,16 @@ Item {
            iter+=0.1
         }
 
-        for(var i = x1; i < x2; i++)
+        var stepW = 0.02*radius
+        var start = 0
+        var finish = 0
+        for(var i = x1; i <= x2; i+=stepW)
         {
-           var y = getWave(i,w,a)
-           ctx.lineTo(i,y + (centreY + radius - border) - value);
+            var y = getWave(i,w,a) + (centreY + radius - border) - heightT
+            var dist = Math.sqrt(Math.pow(centreX - i, 2) + Math.pow(centreY - i, 2))
+            if (dist < radius) {
+                ctx.lineTo(i,y);
+            }
         }
         iter = heightT
 
@@ -120,9 +127,7 @@ Item {
             ctx.lineWidth = 1;
             ctx.strokeStyle = Qt.rgba(0, 0, 0, 1)
 
-//          drawLine(ctx,centreY, centreX,radius, border,start, step)
-
-            drawWawe(ctx,centreY, centreX,radius, border,heightT)
+            drawWave(ctx,centreY, centreX,radius, border,heightT)
 
 
             ctx.beginPath();
