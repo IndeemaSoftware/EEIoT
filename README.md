@@ -1,4 +1,4 @@
-<h1 align="center"><img src="https://github.com/IndeemaSoftware/EEIoT/blob/Assets/EEIoT_2.gif"/><br> EEIoT</h1>
+<h1 align="center"><img src="https://github.com/IndeemaSoftware/EEIoT/blob/Assets/EEIoT_21.gif"/><br> EEIoT</h1>
 
 # EEIoT
 QML IoT components, for fast and super user friendly IoT projects
