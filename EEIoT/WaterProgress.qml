@@ -5,16 +5,18 @@ Item {
     id: waterProgress
     antialiasing: true
 
-    property double from:0
-    property double value: 1
-    property double to: 100
+    property double from:0 //min value
+    property double value: 1 //current value
+    property double to: 100 // max value
 
-    property int lineWidth: width / 50
+    property bool levelAsWave: true //show level as wave or simple line
+
+    property int lineWidth: width / 50 //component lines width
 
     property int fontSize: width / 6
 
-    property color color: Qt.rgba(0.2, 0.62, 0.93, 0.7)
-    property color textColor: Qt.rgba(0.03, 0.3, 0.5, 1)
+    property color color: Qt.rgba(0.2, 0.62, 0.93, 0.7) // component color
+    property color textColor: Qt.rgba(0.03, 0.3, 0.5, 1) //inner text color
 
     function update(value) {
         waterProgress.value = value
@@ -75,13 +77,24 @@ Item {
         var finishX = 0
         var finishY = 0
         var isFirst = true
+        var wave = 0
+
+        if (x1 === x2 )
+        {
+            colsole.log("shit");
+        }
         for (var i=x1;i<=x2;i+=stepW)
         {
+            if (levelAsWave)
+            {
+                wave = getWave(i,1/distance*w,a)
+            }
+
             amp = 1.0 - Math.abs(Math.abs(centreX - i) - radius) *a
-            y = getWave(i,1/distance*w,a) + (centreY + radius) - heightT
+            y = wave + (centreY + radius) - heightT
             dist = Math.sqrt(Math.pow(centreX - i, 2) + Math.pow(centreY - y, 2))
 
-            if (dist <= radius) {
+            if (dist <= radius || !levelAsWave) {
                 if (isFirst) {
                     ctx.moveTo(i, y);
                     startX = i;
@@ -95,7 +108,13 @@ Item {
 
                 isFirst = false
             }
+
+            if (!levelAsWave)
+            {
+                break
+            }
         }
+
         iter = heightT
 
         while(iter >= 0) {
