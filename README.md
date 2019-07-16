@@ -8,7 +8,9 @@ You can check sample code that uses EEIoT lib - https://github.com/IndeemaSoftwa
 
 # Easy start
 To start using EEIoT just run
+```bash
 qpm install com.indeema.eeiot
+```
 
 and then import the lib
 
