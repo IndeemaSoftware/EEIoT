@@ -5,3 +5,5 @@ RESOURCES += \
 HEADERS +=
 
 SOURCES +=
+
+DISTFILES +=

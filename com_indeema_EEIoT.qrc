@@ -4,5 +4,8 @@
         <file>EEIoT/WaterLevel.qml</file>
         <file>EEIoT/Linear.qml</file>
         <file>EEIoT/Knob.qml</file>
+        <file>EEIoT/Knob.png</file>
+        <file>EEIoT/WaterLevel.png</file>
+        <file>EEIoT/Linear.png</file>
     </qresource>
 </RCC>
