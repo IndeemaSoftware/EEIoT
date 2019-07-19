@@ -4,8 +4,14 @@ import QtCharts 2.0
 Item {
     id: waterProgress
 
-    property var properties : ["from", "to", "value", "levelAsWave", "color", "textColor" ]
-    property var methods : ["update"]
+    property var metaData : ["from", "to", "value", "levelAsWave", "color", "textColor"]
+//    property var metaData : {
+//        "from":"double",
+//        "to":"double",
+//        "value":"double",
+//        "levelAsWave":"bool",
+//        "color":"qcolor",
+//        "textColor":"qcolor"}
 
     property double from:0 //min value
     property double value: 1 //current value
