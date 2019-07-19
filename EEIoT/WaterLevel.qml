@@ -3,20 +3,21 @@ import QtCharts 2.0
 
 Item {
     id: waterProgress
-    antialiasing: true
+
+    property var properties : ["from", "to", "value", "levelAsWave", "color", "textColor" ]
+    property var methods : ["update"]
 
     property double from:0 //min value
     property double value: 1 //current value
     property double to: 100 // max value
 
     property bool levelAsWave: true //show level as wave or simple line
-
     property int lineWidth: width / 50 //component lines width
-
-    property int fontSize: width / 6
 
     property color color: Qt.rgba(0.2, 0.62, 0.93, 0.7) // component color
     property color textColor: Qt.rgba(0.03, 0.3, 0.5, 1) //inner text color
+
+    property int fontSize: width / 6
 
     function update(value) {
         waterProgress.value = value
@@ -42,7 +43,7 @@ Item {
         anchors.horizontalCenter: parent.horizontalCenter
     }
 
-    
+
     function getWave(x, w, a)
     {
        return a* Math.sin(w*x)
