@@ -3,11 +3,22 @@ import QtQuick 2.0
 Item {
     id: linear
 
-    property alias labelFont: label.font
+    property var metaData : ["from", "to", "value",
+        "labelFont",
+        "scaleColor",
+        "warningStart", "dangerStart",
+        "okColor", "warningColor", "dengerColor",
+    "okBackColor", "warningColor", "warningBackColor", "dangerBackColor",
+    "fontSize",
+    "barWidth", "barShift", "pointerSize",
+    "scaleNum",
+    "startX", "startY", "shift"]
 
     property double from: 0
     property double value: 1
     property double to: 100
+
+    property alias labelFont: label.font
 
     property color scaleColor: "lightGray"
 

@@ -4,24 +4,25 @@ Item {
     id: knob
     transformOrigin: Item.Center
 
-    property int lineWidth: width / 10
-
-    property int fontSize: width / 7
-
-    property color knobBackgroundColor: Qt.rgba(0.1, 0.1, 0.1, 0.1)
-    property color knobColor: Qt.rgba(1, 0, 0, 1)
+    property var metaData : ["from", "to", "value", "reverse", "fromAngle", "toAngle", "lineWidth", "fontSize", "knobBackgroundColor", "knobColor"]
 
     //value parameters
     property double from:0
     property double value: 1
     property double to: 100
 
+    //progress from right to left
+    property bool reverse: false
+
     //progress circle angle
     property double fromAngle: Math.PI - 1
     property double toAngle: Math.PI *2 + 1
 
-    //progress from right to left
-    property bool reverse: false
+    property int lineWidth: width / 10
+    property int fontSize: width / 7
+
+    property color knobBackgroundColor: Qt.rgba(0.1, 0.1, 0.1, 0.1)
+    property color knobColor: Qt.rgba(1, 0, 0, 1)
 
     function update(value) {
         knob.value = value
