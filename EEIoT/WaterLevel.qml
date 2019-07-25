@@ -1,50 +1,49 @@
 import QtQuick 2.0
 import QtCharts 2.0
 
+
+//all the automatic meagurements are made from height of Item
 Item {
     id: waterProgress
 
     property var metaData : ["from", "to", "value",
         "levelAsWave", "lineWidth",
         "color", "textColor",
-    "fontSize"]
+    "fontSize",
+    "title", "titleFont", "titleFontSize", "titleFontColor"]
 
     property double from:0 //min value
     property double value: 1 //current value
     property double to: 100 // max value
 
     property bool levelAsWave: true //show level as wave or simple line
-    property int lineWidth: width / 50 //component lines width
+    property int lineWidth: height / 50 //component lines width
 
     property color color: Qt.rgba(0.2, 0.62, 0.93, 0.7) // component color
     property color textColor: Qt.rgba(0.03, 0.3, 0.5, 1) //inner text color
 
-    property int fontSize: width / 6
+    property int fontSize: height / 6
+
+    property string title: ""
+    property alias titleFont: labelTitle.font.family
+    property alias titleFontSize: labelTitle.font.pointSize
+    property alias titleFontColor: labelTitle.color
 
     function update(value) {
         waterProgress.value = value
         canvas.requestPaint()
         label.text = value.toFixed(2)
-        label.anchors.horizontalCenter = waterProgress.horizontalCenter
-        label.anchors.verticalCenter = waterProgress.verticalCenter
         label.transformOrigin = Item.Center
-        label.anchors.centerIn = waterProgress.anchors.centerIn
     }
 
     Text {
-        id: label
-        width: 40
-        height: 12
-        color: waterProgress.textColor
-        font.bold: true
-        font.pointSize: waterProgress.fontSize
-        text: waterProgress.value.toFixed(2)
-        z: 1
+        id: labelTitle
+        y: 0
+        text: waterProgress.title
+        color: Qt.rgba(0, 0, 0., 0.5)
         horizontalAlignment: Text.AlignHCenter
-        anchors.verticalCenter: parent.verticalCenter
         anchors.horizontalCenter: parent.horizontalCenter
     }
-
 
     function getWave(x, w, a)
     {
@@ -156,45 +155,56 @@ Item {
 
     Canvas {
         id: canvas
-        width: parent.width
+        width: parent.height
         height: parent.height
         antialiasing: true
 
-        property double radius: width/2.0
+        property double radius: height/2.0
         property int border: 5
         readonly property double start: Math.PI*2.5
         readonly property double coef: waterProgress.value / (waterProgress.to - waterProgress.from)
         property double step: coef * Math.PI
+
+        Text {
+            id: label
+            color: waterProgress.textColor
+            font.bold: true
+            font.pointSize: waterProgress.fontSize
+            text: waterProgress.value.toFixed(2)
+            z: 1
+            horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            anchors.fill: parent
+        }
 
 
         onPaint: {
             var ctx = canvas.getContext("2d");
             ctx.reset();
 
-            var centreX = width / 2.0;
-            var centreY = height / 2.0;
+            if (waterProgress.title !== "") {
+                canvas.y = labelTitle.height
+                canvas.x = labelTitle.height/2
+                canvas.height = parent.height - labelTitle.height
+                canvas.width = parent.height - labelTitle.height
+                canvas.radius = canvas.height /2
+            }
 
-            var innerRadius = radius - border - waterProgress.lineWidth
+            var centreX = canvas.height / 2.0;
+            var centreY = canvas.height / 2.0;
+
+            var innerRadius = canvas.radius - canvas.border - waterProgress.lineWidth
             var heightT = innerRadius*2.0*coef
    
             ctx.lineWidth = 1;
             ctx.strokeStyle = Qt.rgba(0, 0, 0, 1)
 
-            if (value == waterProgress.to) {
-                ctx.beginPath();
-                ctx.fillStyle = waterProgress.color
-                ctx.strokeStyle = waterProgress.color;
-                ctx.arc(centreX, centreY, innerRadius, 0, 2*Math.PI, false);
-                ctx.fill();
-                ctx.stroke();
-            } else if (value > waterProgress.from) {
-                drawWave(ctx, centreY, centreX, innerRadius, border, heightT)
-            }
+            drawWave(ctx, centreY, centreX, innerRadius, border, heightT)
 
             ctx.beginPath();
             ctx.strokeStyle = waterProgress.color;
             ctx.lineWidth = waterProgress.lineWidth;
-            ctx.arc(radius, radius, radius - waterProgress.lineWidth/2, 0, 2*Math.PI, false);
+            ctx.arc(centreX, centreY, radius - waterProgress.lineWidth, 0, 2*Math.PI, false);
             ctx.stroke();
         }
     }
