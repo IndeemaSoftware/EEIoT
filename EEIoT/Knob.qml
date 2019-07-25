@@ -38,6 +38,7 @@ Item {
     function update(value) {
         knob.value = value
         canvas.requestPaint()
+        background.requestPaint()
         label.text = value.toFixed(2);
     }
 
@@ -113,11 +114,6 @@ Item {
                 canvas.width = parent.height - labelTitle.height/2
                 canvas.radius = canvas.height /2
             }
-
-            background.x = canvas.x
-            background.y = canvas.y
-            background.width = canvas.width
-            background.height = canvas.height
 
             var centreX = canvas.width / 2.0;
             var centreY = canvas.height / 2.0;
