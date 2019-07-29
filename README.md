@@ -3,7 +3,7 @@
 <h1 align="center"><img src="https://github.com/IndeemaSoftware/EEIoT/blob/Assets/weather.png"/><br> Weather application</h1>
 
 # EEIoT
-QML IoT components, for fast and super user friendly IoT projects
+QML IoT components, for fast and super user friendly IoT projects. These components could be used as widgets for [QSimpleScada lib](https://github.com/IndeemaSoftware/QSimpleScada)
 
 # Example
 You can check sample code that uses EEIoT lib - https://github.com/IndeemaSoftware/EEIoT_Sample
